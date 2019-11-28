@@ -5,6 +5,9 @@ import (
 	"math"
 )
 
+var UPPER_BOUND = int(math.Pow(2, 32))-1
+var LOWER_BOUND = -int(math.Pow(2, 32))
+
 func reverse(x int) int {
 	var res int
 	if x == 0 {
@@ -16,15 +19,20 @@ func reverse(x int) int {
 
 	for x > 0 {
 		rem := int(math.Mod(float64(x), 10))
-		fmt.Printf("tens %d\n", tens)
 		res += rem*tens
 		x /= 10
 		tens/=10
 	}
 
-	return res*sign
+	res *= sign
+
+	if res < LOWER_BOUND || res > UPPER_BOUND {
+		return 0
+	}
+
+	return res
 }
 
 func main() {
-	fmt.Printf("result %d\n", reverse(-1269))
+	fmt.Printf("result %d\n", reverse(1534236469))
 }
